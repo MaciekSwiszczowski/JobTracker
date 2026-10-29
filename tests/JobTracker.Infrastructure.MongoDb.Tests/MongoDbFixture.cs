@@ -26,8 +26,14 @@ namespace JobTracker.Infrastructure.MongoDb.Tests;
 /// </remarks>
 public sealed class MongoDbFixture : IAsyncLifetime
 {
+    // mongod 8 refuses to start on Linux kernels 6.19+ (GitHub's runners are on 7.0), because TCMalloc's use of
+    // restartable sequences breaks there: https://jira.mongodb.org/browse/SERVER-121912 tracks the incompatibility.
+    // Testcontainers then reports a missing mongosh, not the crash.
+    // The image sets glibc.pthread.rseq=0 to hand rseq to TCMalloc; =1, glibc's default, keeps it in glibc and
+    // TCMalloc falls back to per-thread caches. Revisit when a mongo:8.0 release fixes this upstream.
     private readonly MongoDbContainer _container = new MongoDbBuilder("mongo:8.0")
         .WithReplicaSet()
+        .WithEnvironment("GLIBC_TUNABLES", "glibc.pthread.rseq=1")
         .Build();
 
     /// <summary>The connection string of the running container.</summary>
@@ -43,8 +49,8 @@ public sealed class MongoDbFixture : IAsyncLifetime
         catch (Exception exception) when (exception is not OperationCanceledException)
         {
             throw new InvalidOperationException(
-                "The MongoDB integration tests need Docker running on this machine (Docker Desktop on Windows). "
-                + "Start Docker and run the tests again.",
+                "The MongoDB test container did not start. These tests need Docker running on this machine (Docker "
+                + "Desktop on Windows); if it is running, the container itself failed. Cause: " + exception.Message,
                 exception);
         }
     }
