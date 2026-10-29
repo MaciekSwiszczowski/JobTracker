@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-22T14:30:00+02:00",
+  "type": "recruiterCall",
+  "summary": "Anna called: first interview booked for Tuesday.",
+  "details": {
+    "interviewAt": "2026-10-28T10:00:00+01:00",
+    "format": "video",
+    "interviewers": ["Tech lead", "Engineering manager"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "statusMessage": "Checking commit approval rule...",
+            "timeout": 15,
+            "command": "$i = [Console]::In.ReadToEnd() | ConvertFrom-Json; $c = \"$($i.tool_input.command)\"; if ($c -match '\\bgit(\\.exe)?\\b' -and $c -match '\\bcommit\\b') { '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"Every commit in this repository must be approved by a human - see AGENTS.md, Hard rules. Review the staged diff before approving.\"}}' }"
+          }
+        ]
+      }
+    ]
+  }
+}

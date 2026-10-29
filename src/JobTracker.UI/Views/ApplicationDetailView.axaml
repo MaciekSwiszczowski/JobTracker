@@ -1,0 +1,89 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:JobTracker.UI.ViewModels"
+             xmlns:f="using:JobTracker.UI.Formatting"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
+             x:Class="JobTracker.UI.Views.ApplicationDetailView"
+             x:DataType="vm:ApplicationDetailViewModel">
+
+    <UserControl.Resources>
+        <!-- A free-form JSON property: the name indented by depth, the value beside it. -->
+        <DataTemplate x:Key="PropertyRowTemplate" x:DataType="f:PropertyRow">
+            <Grid ColumnDefinitions="200,*" Margin="0,1">
+                <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="{Binding Indent}" Opacity="0.7" />
+                <SelectableTextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,8,0,2" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <StackPanel Spacing="6" Margin="0,0,16,16">
+            <SelectableTextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap" />
+            <SelectableTextBlock Text="{Binding CompanyName}" FontSize="16" Opacity="0.8" />
+
+            <ItemsControl ItemsSource="{Binding StandardFields}" Margin="0,8,0,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:FieldRow">
+                        <Grid ColumnDefinitions="200,*" Margin="0,1">
+                            <TextBlock Grid.Column="0" Text="{Binding Label}" Opacity="0.7" />
+                            <SelectableTextBlock Grid.Column="1" Text="{Binding Value}" TextWrapping="Wrap" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border IsVisible="{Binding IsOpen}" Margin="0,8,0,0" Padding="10,8" CornerRadius="4"
+                    BorderThickness="1" BorderBrush="#40808080">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="Close this application" VerticalAlignment="Center" />
+                    <ComboBox Width="160" PlaceholderText="Reason"
+                              ItemsSource="{Binding Source={x:Static vm:ApplicationDetailViewModel.CloseReasons}}"
+                              SelectedItem="{Binding CloseReason}" />
+                    <CalendarDatePicker SelectedDate="{Binding CloseOn}" />
+                    <Button Content="Close" Command="{Binding CloseCommand}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock Classes="section" Text="Timeline" IsVisible="{Binding HasEvents}" />
+            <ItemsControl ItemsSource="{Binding Events}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:EventItem">
+                        <Border BorderThickness="3,0,0,0" BorderBrush="#808080" Padding="10,2,0,2" Margin="0,4">
+                            <StackPanel Spacing="2">
+                                <StackPanel Orientation="Horizontal" Spacing="10" Opacity="0.7">
+                                    <TextBlock Text="{Binding When}" />
+                                    <TextBlock Text="{Binding Kind}" FontWeight="SemiBold" />
+                                </StackPanel>
+                                <SelectableTextBlock Text="{Binding Summary}" TextWrapping="Wrap" />
+                                <ItemsControl ItemsSource="{Binding Details}" IsVisible="{Binding HasDetails}"
+                                              ItemTemplate="{StaticResource PropertyRowTemplate}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Classes="section" Text="Other details" IsVisible="{Binding HasExtraFields}" />
+            <ItemsControl ItemsSource="{Binding ExtraFields}" ItemTemplate="{StaticResource PropertyRowTemplate}" />
+
+            <Expander Header="Description" HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                      IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <SelectableTextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+            </Expander>
+            <Expander Header="Original posting" HorizontalAlignment="Stretch"
+                      IsVisible="{Binding RawText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <SelectableTextBlock Text="{Binding RawText}" TextWrapping="Wrap" />
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

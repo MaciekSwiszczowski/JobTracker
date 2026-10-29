@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!--
+    The local service: an ASP.NET Core minimal API that the Claude skill writes to and the UI reads from.
+    It is the composition root for the layers you write (Application, Infrastructure.MongoDb), and the only
+    project allowed to reference Infrastructure. For now it serves /health and nothing else; the endpoints
+    described in docs/api.md are still to be written.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\JobTracker.Contracts\JobTracker.Contracts.csproj" />
+    <ProjectReference Include="..\JobTracker.Application\JobTracker.Application.csproj" />
+    <ProjectReference Include="..\JobTracker.Infrastructure.MongoDb\JobTracker.Infrastructure.MongoDb.csproj" />
+  </ItemGroup>
+</Project>

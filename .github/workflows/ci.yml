@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
+      - run: dotnet restore JobTracker.slnx
+
+      - run: dotnet build JobTracker.slnx --no-restore --configuration Release
+
+      # Docker is available on GitHub's Ubuntu runners, so the Testcontainers tests run here too.
+      - run: dotnet test --solution JobTracker.slnx --no-build --configuration Release

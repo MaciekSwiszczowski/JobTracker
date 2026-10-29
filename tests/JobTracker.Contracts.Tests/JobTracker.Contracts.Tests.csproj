@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- TargetFramework, Nullable and ImplicitUsings come from Directory.Build.props. -->
+  <PropertyGroup>
+    <RootNamespace>JobTracker.Contracts.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    Pins the wire format. The examples in docs/api are what the Claude skill copies, so they are copied here too
+    and read as test input: an example that stops matching the records fails the build's tests, not the skill.
+  -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobTracker.TestSupport\JobTracker.TestSupport.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Contracts\JobTracker.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\api\*.example.json" LinkBase="examples" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <!-- Assertion library for every test here; see docs/conventions/test-antipatterns.md §4. -->
+    <PackageReference Include="Shouldly" />
+  </ItemGroup>
+
+</Project>

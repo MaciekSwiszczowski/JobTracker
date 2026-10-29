@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    The heart of the app: entities, value objects and business rules.
+    No references to other projects or to MongoDB. Plain C# only.
+  -->
+</Project>

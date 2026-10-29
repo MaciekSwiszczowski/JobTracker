@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- TargetFramework, Nullable and ImplicitUsings come from Directory.Build.props. -->
+  <PropertyGroup>
+    <RootNamespace>JobTracker.Architecture.Tests</RootNamespace>
+    <!--
+      xUnit1069 asks a test with a Timeout to also pass TestContext.Current.CancellationToken to what it awaits.
+      Most rules here have nothing to pass it to: an ArchUnitNET rule and a working-tree rule are synchronous, and
+      Git takes the runner's token from TestContext itself rather than as a parameter. The Timeout is still wanted:
+      xUnit v3 honours it on a synchronous test, so a git command that stops making progress is reported as a
+      timeout and the run carries on instead of hanging. See docs/conventions/test-antipatterns.md §2.
+    -->
+    <NoWarn>$(NoWarn);xUnit1069</NoWarn>
+    <!-- Git owns a Win32 job object, and SetInformationJobObject takes its payload by pointer. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!--
+    xunit.runner.json turns on "parallelMode": "all". xUnit parallelises test collections, and a class is a
+    collection, so by default the tests inside one class run one after another - and two of GitTests' four tests
+    wait out a real command timeout, which serialised is most of this project's wall clock. The Update is what
+    copies it: the default None glob already picks the file up, but leaves CopyToOutputDirectory unset, so the
+    runner would never see it beside the assembly.
+  -->
+  <ItemGroup>
+    <None Update="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    Every production project is referenced, because a dependency rule can only see the assemblies the loader was
+    given: a reference missing here turns its rule into a silent pass rather than a failure. The references exist
+    to put the assemblies in the output folder, not to call into them - the only production types this project
+    names are the anchors SolutionArchitecture takes typeof of. SolutionArchitecture.AllAssemblies needs every one:
+    a missing reference fails its typeof at compile time or its Assembly.Load at run time, and
+    ProjectStructureTests.EveryProductionProject_IsLoadedByTheArchitectureRules asserts AllAssemblies names every
+    project under src/.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\JobTracker.TestSupport\JobTracker.TestSupport.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Contracts\JobTracker.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Domain\JobTracker.Domain.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Application\JobTracker.Application.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Infrastructure.MongoDb\JobTracker.Infrastructure.MongoDb.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.Api\JobTracker.Api.csproj" />
+    <ProjectReference Include="..\..\src\JobTracker.UI\JobTracker.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <!-- Generates Windows.Win32.PInvoke from NativeMethods.txt; build-time only, nothing to ship. -->
+    <PackageReference Include="Microsoft.Windows.CsWin32" PrivateAssets="all" />
+    <!-- Assertion library for every test here; see docs/conventions/test-antipatterns.md §4. -->
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="TngTech.ArchUnitNET" />
+    <PackageReference Include="TngTech.ArchUnitNET.xUnitV3" />
+    <!-- GitTests.Run_WhenTheRunIsStopped retries a rare OS-level race in Git's cleanup; see the test. -->
+    <PackageReference Include="xRetry.v3" />
+  </ItemGroup>
+
+</Project>

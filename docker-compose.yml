@@ -1,0 +1,25 @@
+# Local MongoDB for running the app (tests start their own container via Testcontainers).
+#   docker compose up -d
+#   connection string: mongodb://localhost:27017/?replicaSet=rs0
+#
+# It runs as a single-node replica set because MongoDB transactions need a replica set.
+# The healthcheck initialises the replica set on first start.
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: jobtracker-mongo
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: >
+        mongosh --port 27017 --quiet --eval
+        "try { rs.status().ok } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27017' }] }).ok }"
+      interval: 5s
+      timeout: 30s
+      retries: 30
+
+volumes:
+  mongo-data:

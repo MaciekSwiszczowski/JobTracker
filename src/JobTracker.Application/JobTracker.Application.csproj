@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Use cases (what the app can do) and ports (interfaces such as repositories)
+    that the infrastructure layer implements. Depends on Domain only.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\JobTracker.Domain\JobTracker.Domain.csproj" />
+  </ItemGroup>
+</Project>

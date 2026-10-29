@@ -1,0 +1,25 @@
+{
+  "id": "6720f1a2c3d4e5f6a7b8c9d0",
+  "company": { "name": "Contoso", "website": "https://contoso.example" },
+  "title": "Senior .NET Developer",
+  "appliedOn": "2026-10-20",
+  "status": "closed",
+  "events": [
+    {
+      "at": "2026-10-22T14:30:00+02:00",
+      "type": "recruiterCall",
+      "summary": "Anna called: first interview booked for Tuesday.",
+      "details": { "format": "video" }
+    },
+    {
+      "at": "2026-10-28T09:15:00+01:00",
+      "type": "rejection",
+      "summary": "They went with a candidate with more Kafka experience."
+    }
+  ],
+  "description": "Build and run the payments platform in a team of six.",
+  "sourceUrl": "https://jobs.contoso.example/4711",
+  "closure": { "closedOn": "2026-10-28", "reason": "Rejected" },
+  "extra": { "workMode": "hybrid", "techStack": ["C#", "MongoDB"] },
+  "rawText": "Senior .NET Developer at Contoso\n..."
+}

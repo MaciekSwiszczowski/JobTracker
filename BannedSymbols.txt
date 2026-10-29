@@ -1,0 +1,18 @@
+# Bans that apply to every production project under Debug_Analyzers. Test projects are not analysed by
+# BannedApiAnalyzers; docs/conventions/test-antipatterns.md §1 bans the clock there instead.
+
+# The clock is an input. Read it through an injected TimeProvider so a test can pin it with FakeTimeProvider;
+# "awaiting response for N days" is untestable against the wall clock.
+P:System.DateTime.Now;Inject TimeProvider and call GetLocalNow().
+P:System.DateTime.UtcNow;Inject TimeProvider and call GetUtcNow().
+P:System.DateTime.Today;Inject TimeProvider and call GetLocalNow().
+P:System.DateTimeOffset.Now;Inject TimeProvider and call GetLocalNow().
+P:System.DateTimeOffset.UtcNow;Inject TimeProvider and call GetUtcNow().
+
+# Sync-over-async deadlocks a UI app: blocking the UI thread on a task that needs the UI thread to complete is
+# unrecoverable.
+M:System.Threading.Tasks.Task.get_Result;Use await.
+M:System.Threading.Tasks.Task`1.get_Result;Use await.
+M:System.Threading.Tasks.Task.Wait;Use await.
+M:System.Threading.Tasks.Task.Wait(System.Int32);Use await.
+M:System.Threading.Tasks.Task.Wait(System.Threading.CancellationToken);Use await.

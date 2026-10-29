@@ -1,0 +1,20 @@
+{
+  "company": {
+    "name": "Contoso",
+    "website": "https://contoso.example"
+  },
+  "title": "Senior .NET Developer",
+  "appliedOn": "2026-10-20",
+  "description": "Build and run the payments platform in a team of six. C# on .NET, MongoDB, Kafka, Azure.",
+  "sourceUrl": "https://jobs.contoso.example/4711",
+  "extra": {
+    "salary": { "min": 24000, "max": 30000, "currency": "PLN", "period": "month", "contract": "B2B" },
+    "location": "Warsaw",
+    "workMode": "hybrid",
+    "officeDaysPerWeek": 2,
+    "techStack": ["C#", ".NET", "MongoDB", "Kafka", "Azure"],
+    "seniority": "senior",
+    "recruiter": { "name": "Anna Nowak", "email": "anna.nowak@contoso.example" }
+  },
+  "rawText": "Senior .NET Developer at Contoso\nWarsaw (hybrid, 2 days a week in the office)\n24 000 - 30 000 PLN net/month on B2B\n..."
+}

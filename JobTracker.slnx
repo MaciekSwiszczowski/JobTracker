@@ -1,0 +1,39 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Debug_Analyzers" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="AGENTS.md" />
+    <File Path="BannedSymbols.txt" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="docker-compose.yml" />
+    <File Path="README.md" />
+    <File Path="docs/api.md" />
+    <File Path=".claude/skills/job-applications/SKILL.md" />
+    <File Path="docs/conventions/test-antipatterns.md" />
+    <File Path="Invoke-Tests.ps1" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/JobTracker.Contracts/JobTracker.Contracts.csproj" />
+    <Project Path="src/JobTracker.Domain/JobTracker.Domain.csproj" />
+    <Project Path="src/JobTracker.Application/JobTracker.Application.csproj" />
+    <Project Path="src/JobTracker.Infrastructure.MongoDb/JobTracker.Infrastructure.MongoDb.csproj" />
+    <Project Path="src/JobTracker.Api/JobTracker.Api.csproj" />
+    <Project Path="src/JobTracker.UI/JobTracker.UI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/JobTracker.TestSupport/JobTracker.TestSupport.csproj" />
+    <Project Path="tests/JobTracker.Contracts.Tests/JobTracker.Contracts.Tests.csproj" />
+    <Project Path="tests/JobTracker.Domain.Tests/JobTracker.Domain.Tests.csproj" />
+    <Project Path="tests/JobTracker.Application.Tests/JobTracker.Application.Tests.csproj" />
+    <Project Path="tests/JobTracker.Infrastructure.MongoDb.Tests/JobTracker.Infrastructure.MongoDb.Tests.csproj" />
+    <Project Path="tests/JobTracker.Api.Tests/JobTracker.Api.Tests.csproj" />
+    <Project Path="tests/JobTracker.UI.Tests/JobTracker.UI.Tests.csproj" />
+    <Project Path="tests/JobTracker.Architecture.Tests/JobTracker.Architecture.Tests.csproj" />
+  </Folder>
+</Solution>

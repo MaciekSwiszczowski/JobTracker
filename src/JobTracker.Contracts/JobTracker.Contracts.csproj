@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    The wire contract: the JSON the Claude skill posts and the UI reads, as C# records. docs/api.md describes it
+    in words and docs/api/*.example.json shows it; JobTracker.Contracts.Tests holds the three together.
+    Plain System.Text.Json only. It references no other project, so the API, the UI and a future MCP server can
+    all share it without seeing each other.
+  -->
+</Project>

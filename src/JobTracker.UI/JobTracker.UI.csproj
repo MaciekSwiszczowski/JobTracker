@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Avalonia desktop UI. Read-only, except for closing an application: it shows what the Claude skill stored
+    through the service. It talks to JobTracker.Api over HTTP through JobTracker.Contracts, and to nothing else -
+    not to Domain, Application or MongoDB. The sample switch (see README.md) runs it on built-in data instead.
+  -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <!--
+      MA0004 asks for ConfigureAwait(false) on every await. In a view model that is wrong: the code after the await
+      updates bound properties and collections, which must happen on the UI thread the await captured. The library
+      layers (Domain, Application, Infrastructure) keep the rule, because they have no UI thread to return to.
+    -->
+    <NoWarn>$(NoWarn);MA0004</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobTracker.Contracts\JobTracker.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+      <IncludeAssets Condition="'$(Configuration)' == 'Release'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' == 'Release'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="JobTracker.UI.Tests" />
+  </ItemGroup>
+</Project>

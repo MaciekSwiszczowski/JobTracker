@@ -1,0 +1,8 @@
+// Job objects. Used only by this project's git helper (Git.cs), which puts every git process in a
+// kill-on-close job so a descendant cannot outlive the command. Listed here rather than hand-written
+// there because CsWin32 owns the JOBOBJECT_EXTENDED_LIMIT_INFORMATION layout and the handle type.
+CreateJobObjectW
+SetInformationJobObject
+AssignProcessToJobObject
+JOBOBJECT_EXTENDED_LIMIT_INFORMATION
+JOB_OBJECT_LIMIT

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- TargetFramework, Nullable and ImplicitUsings come from Directory.Build.props. -->
+  <PropertyGroup>
+    <RootNamespace>JobTracker.TestSupport</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    Shared test helpers: a library, not a test project. The name deliberately does not end in ".Tests", or the
+    rule in Directory.Build.props would turn it into a self-hosting test executable.
+    A helper moves here the moment a second test project needs it (docs/conventions/test-antipatterns.md §3.1).
+  -->
+
+  <ItemGroup>
+    <!-- TestContext and ITestOutputHelper, without the in-process runner that xunit.v3 adds. -->
+    <PackageReference Include="xunit.v3.extensibility.core" />
+  </ItemGroup>
+
+</Project>

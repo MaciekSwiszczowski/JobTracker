@@ -1,0 +1,18 @@
+[
+  {
+    "id": "6720f1a2c3d4e5f6a7b8c9d0",
+    "company": "Contoso",
+    "title": "Senior .NET Developer",
+    "appliedOn": "2026-10-20",
+    "status": "closed",
+    "lastEventAt": "2026-10-28T09:15:00+01:00"
+  },
+  {
+    "id": "6720f1a2c3d4e5f6a7b8c9d1",
+    "company": "Fabrikam",
+    "title": "Backend Engineer",
+    "appliedOn": "2026-10-24",
+    "status": "open",
+    "lastEventAt": null
+  }
+]
