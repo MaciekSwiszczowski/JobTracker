@@ -20,7 +20,7 @@ The HTTP contract between them is [docs/api.md](docs/api.md).
 
 ## Prerequisites
 
-- .NET 11 SDK, RC3 or later (`dotnet --version` should print `11.0.100-rc.3...` or newer; see `global.json`)
+- .NET 10 SDK (`dotnet --version` should print `10.0.100` or a later 10.0 feature band; see `global.json`)
 - Docker Desktop, running. The MongoDB integration tests start their own MongoDB container, and
   `docker compose up -d` runs one for the service.
 - Claude Code, for the skill. No API key: it runs on a normal Claude subscription.

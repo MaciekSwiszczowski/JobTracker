@@ -62,7 +62,7 @@ false positive.
 
 ## Conventions
 
-- .NET 11, C# with `ImplicitUsings` and `Nullable` enabled. Keep both on.
+- .NET 10, C# with `ImplicitUsings` and `Nullable` enabled. Keep both on.
 - Global usings live in each test project's `GlobalUsings.cs`.
 - One type per file. Every type carries a `/// <summary>`. Comment the *why*, never narrate the next line.
 - MongoDB types (`BsonDocument`, `[Bson…]` attributes, `IMongoCollection<T>`) never appear in Domain or

@@ -11,7 +11,7 @@
 
 ## The frame
 
-The suite is xUnit v3 on .NET 11, with **Shouldly** as the assertion library and **Moq** for mocks.
+The suite is xUnit v3 on .NET 10, with **Shouldly** as the assertion library and **Moq** for mocks.
 
 | Project | Subject |
 | --- | --- |
